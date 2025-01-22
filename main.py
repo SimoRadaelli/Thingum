@@ -107,9 +107,13 @@ def delete_item(id: str):
 #6 Ottenere numero righe del CSV
 @app.get("/items/count")
 def count_items():
-    print("Funzione count_items chiamata")
-    data = read_csv()
-    return {"count": len(data)}
+    print("Funzione count_items chiamata")  # Log di debug
+    data = read_csv()  # Leggi i dati dal CSV
+    if not data:
+        # Se i dati sono vuoti, restituisci un messaggio di errore
+        return {"detail": "Record non trovato"}
+    return {"count": len(data)}  # Conta le righe e restituisci il conteggio
+
 
 print("Server avviato correttamente. Endpoint registrati:")
 print(app.openapi())
