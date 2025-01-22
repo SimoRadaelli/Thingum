@@ -25,17 +25,10 @@ class UpdateItem(BaseModel):
 
 #Lettura CSV
 def read_csv() -> List[Dict[str, str]]:
-    try:
-        print(f"Tentativo di apertura del file: {CSV_FILE}")
-        with open(CSV_FILE, mode="r", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
-            rows = list(reader)
-            print(f"Dati letti dal file CSV: {rows}")  # Log dei dati letti
-            return rows
-    except FileNotFoundError:
-        print(f"Errore: il file {CSV_FILE} non esiste!")
-        return []
-
+    with open(CSV_FILE, mode="r", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        rows = list(reader)
+        return rows
 
 #Scrivere su CSV
 def write_csv(data: List[Dict[str, str]]):
@@ -114,23 +107,10 @@ def delete_item(id: str):
 #6 Ottenere numero righe del CSV
 @app.get("/items/count")
 def count_items():
-    try:
-        data = read_csv()
-        print(f"Dati ottenuti da read_csv: {data}")  # Log
-        return {"count": len(data)}  # Restituisci il numero di righe
-    except Exception as e:
-        print(f"Errore nella funzione count_items: {e}")
-        return {"detail": "Errore durante la lettura dei dati"}
+    data = read_csv()
+    return {"count": len(data)}
 
-
-print("Server avviato correttamente")
-#print(app.openapi())
 
 #uvicorn main:app --reload
 #curl http://127.0.0.1:8000/items/count
 
-#@app.get("/items/count")
-#def count_items():
-    #print("Funzione count_items chiamata")
-    #data = read_csv()
-    #return {"count": len(data)}
