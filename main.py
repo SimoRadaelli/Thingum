@@ -114,5 +114,3 @@ def count_items():
 #uvicorn main:app --reload
 #curl http://127.0.0.1:8000/items/count
 
-
-
