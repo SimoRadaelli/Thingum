@@ -108,7 +108,7 @@ def delete_item(id: str):
 @app.get("/items/count")
 def count_items():
     data = read_csv()
-    return data
+    return {"count": len(data)}
 
 
 #uvicorn main:app --reload
