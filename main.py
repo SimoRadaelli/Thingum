@@ -114,15 +114,16 @@ def delete_item(id: str):
 #6 Ottenere numero righe del CSV
 @app.get("/items/count")
 def count_items():
-    print("Funzione count_items chiamata")  # Log di debug
-    data = read_csv()  # Leggi i dati dal CSV
-    if not data:
-        # Se i dati sono vuoti, restituisci un messaggio di errore
-        return {"detail": "Record non trovato"}
-    return {"count": len(data)}  # Conta le righe e restituisci il conteggio
+    try:
+        data = read_csv()
+        print(f"Dati ottenuti da read_csv: {data}")  # Log
+        return {"count": len(data)}  # Restituisci il numero di righe
+    except Exception as e:
+        print(f"Errore nella funzione count_items: {e}")
+        return {"detail": "Errore durante la lettura dei dati"}
 
 
-print("Server avviato correttamente. Endpoint registrati:")
+print("Server avviato correttamente")
 #print(app.openapi())
 
 #uvicorn main:app --reload
